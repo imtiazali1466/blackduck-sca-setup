@@ -79,6 +79,7 @@ chmod +x *.sh
 
 # Configure Docker network (requires logout/login after Docker group changes)
 sudo ./configure_docker_network.sh
+
 2. Docker Swarm Setup
 bash
 # Initialize Docker Swarm with custom networks
