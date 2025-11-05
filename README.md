@@ -256,10 +256,26 @@ docker network inspect blackduck-frontend
 # Disk space monitoring
 df -h /opt/blackduck
 ```
+
 ---
-# Scripts Overview
-| Script | Purpose |
+
+## ⚙️ Prerequisites
+
+| Requirement | Specification | Notes |
 | :--- | :--- | :--- |
+| **Operating System** | Amazon Ubuntu 20.04 LTS or 22.04 LTS | |
+| **Memory (RAM)** | Minimum **8GB** (16GB recommended) | |
+| **Storage** | **100GB** free disk space | For data and logs. |
+| **Platform** | Docker and Docker Swarm installed | |
+| **Licensing** | Valid BlackDuck license files | Essential for deployment. |
+
+---
+
+---
+## Scripts Overview
+
+| Script | Purpose |
+| :--- | :--- |
 | install_blackduck.sh |	Installs system dependencies and language runtimes |
 | configure_docker_network.sh |	Configures Docker daemon with custom network settings |
 | init_swarm_advanced.sh |	Initializes Docker Swarm with segregated networks |
@@ -267,6 +283,7 @@ df -h /opt/blackduck
 | blackduck_commands.sh |	Management commands for daily operations |
 | health_check.sh |	Comprehensive system and service health verification |
 | check_networks.sh |	Network configuration and connectivity verification |
+
 ---
 
 Docker Network Architecture
