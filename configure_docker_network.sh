@@ -15,10 +15,10 @@ fi
 # Create new daemon.json
 sudo tee "$DOCKER_DAEMON_JSON" > /dev/null <<'EOF'
 {
-  "bip": "172.30.0.1/16",
+  "bip": "192.168.20.1/24",
   "default-address-pools": [
     {
-      "base": "172.30.0.0/16",
+      "base": "192.168.20.0/24",
       "size": 24
     }
   ],
