@@ -256,8 +256,10 @@ docker network inspect blackduck-frontend
 # Disk space monitoring
 df -h /opt/blackduck
 ```
-Scripts Overview
+---
+# Scripts Overview
 | Script | Purpose |
+| :--- | :--- | :--- |
 | install_blackduck.sh |	Installs system dependencies and language runtimes |
 | configure_docker_network.sh |	Configures Docker daemon with custom network settings |
 | init_swarm_advanced.sh |	Initializes Docker Swarm with segregated networks |
@@ -265,6 +267,7 @@ Scripts Overview
 | blackduck_commands.sh |	Management commands for daily operations |
 | health_check.sh |	Comprehensive system and service health verification |
 | check_networks.sh |	Network configuration and connectivity verification |
+---
 
 Docker Network Architecture
 The installation implements a three-tier network architecture:
