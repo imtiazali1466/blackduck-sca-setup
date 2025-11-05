@@ -30,7 +30,7 @@ BlackDuck is deployed as a Docker Swarm stack with segregated networks for enhan
 ## 📂 Directory Structure
 
 The installation uses a standard structure under `/opt/blackduck/`.
-
+```text
 /opt/blackduck/
 ├── config/
 │   └── nginx.conf
@@ -43,6 +43,7 @@ The installation uses a standard structure under `/opt/blackduck/`.
 │   └── ssl/
 ├── docker-compose.yml
 └── .env
+```
 
 ## Essential Paths and Directories
 ```bash
