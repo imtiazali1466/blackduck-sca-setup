@@ -257,19 +257,6 @@ docker network inspect blackduck-frontend
 df -h /opt/blackduck
 ```
 
----
-
-## ⚙️ Prerequisites
-
-| Requirement | Specification | Notes |
-| :--- | :--- | :--- |
-| **Operating System** | Amazon Ubuntu 20.04 LTS or 22.04 LTS | |
-| **Memory (RAM)** | Minimum **8GB** (16GB recommended) | |
-| **Storage** | **100GB** free disk space | For data and logs. |
-| **Platform** | Docker and Docker Swarm installed | |
-| **Licensing** | Valid BlackDuck license files | Essential for deployment. |
-
----
 
 ---
 ## Scripts Overview
@@ -287,48 +274,40 @@ df -h /opt/blackduck
 ---
 
 Docker Network Architecture
-The installation implements a three-tier network architecture:
-
-Frontend Network (172.30.1.0/24): Public-facing services (NGiNX)
-
-Backend Network (172.30.2.0/24): Internal application services
-
-Database Network (172.30.3.0/24): Isolated database services
+* The installation implements a three-tier network architecture:
+* Frontend Network (172.30.1.0/24): Public-facing services (NGiNX)
+* Backend Network (172.30.2.0/24): Internal application services
+* Database Network (172.30.3.0/24): Isolated database services
 
 This segregation enhances security by limiting exposure and controlling service communication.
 
 Support and Troubleshooting
 For issues with this installation:
 
-Check Prerequisites: Verify all system requirements are met
-
-Review Logs: Use docker service logs for detailed error information
-
-Network Verification: Run ./check_networks.sh to validate network configuration
-
-Health Check: Execute ./health_check.sh for comprehensive system status
-
-Resource Monitoring: Check system resources with docker stats and df -h
+1. Check Prerequisites: Verify all system requirements are met
+2. Review Logs: Use docker service logs for detailed error information
+3. Network Verification: Run ./check_networks.sh to validate network configuration
+4. Health Check: Execute ./health_check.sh for comprehensive system status
+5. Resource Monitoring: Check system resources with docker stats and df -h
 
 Common issues and solutions:
 
-Port conflicts: Verify no other services are using ports 443 or 55436
-
-Network issues: Ensure Docker Swarm is properly initialized and networks created
-
-Resource exhaustion: Monitor memory and disk usage, scale services if needed
-
-SSL errors: Verify certificate paths and permissions in NGiNX configuration
+1. Port conflicts: Verify no other services are using ports 443 or 55436
+2. Network issues: Ensure Docker Swarm is properly initialized and networks created
+3. Resource exhaustion: Monitor memory and disk usage, scale services if needed
+4. SSL errors: Verify certificate paths and permissions in NGiNX configuration
 
 License
 This installation script is provided as-is for educational and implementation purposes. Please ensure you have proper BlackDuck licenses before deployment in production environments.
 
 Make Scripts Executable
-bash
+```bash
 # Make all scripts executable
 chmod +x *.sh
 
 # Verify executable permissions
 ls -la *.sh
+```
+
 This comprehensive documentation provides complete guidance for setting up, operating, and maintaining BlackDuck SCA in a Docker Swarm environment with enterprise-grade network security and monitoring capabilities.
 
