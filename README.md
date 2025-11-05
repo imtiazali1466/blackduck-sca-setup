@@ -33,19 +33,19 @@ The installation uses a standard structure under `/opt/blackduck/`.
 
 /opt/blackduck/
 ├── config/
-│   └── nginx.conf            # NGiNX Reverse Proxy config
+│   └── nginx.conf
 ├── data/
-│   ├── postgres/            # PostgreSQL data volume
-│   └── elasticsearch/       # Elasticsearch data volume
-├── logs/                     # Application and Swarm logs
-├── backups/                  # Database backups
+│   ├── postgres/          # PostgreSQL data
+│   └── elasticsearch/     # Elasticsearch data
+├── logs/
+├── backups/
 ├── secrets/
-│   └── ssl/                  # SSL Certificates
-├── docker-compose.yml        # Docker Swarm stack definition
-└── .env                      # Environment variables (credentials, versions)
+│   └── ssl/
+├── docker-compose.yml
+└── .env
 
-Essential Paths and Directories
-bash
+## Essential Paths and Directories
+```bash
 # Main installation directory
 /opt/blackduck/
 
@@ -68,9 +68,12 @@ bash
 
 # Environment variables
 /opt/blackduck/.env
-Quick Start
+```
+
+## Quick Start
+
 1. System Preparation
-bash
+```bash
 # Make scripts executable
 chmod +x *.sh
 
@@ -79,19 +82,24 @@ chmod +x *.sh
 
 # Configure Docker network (requires logout/login after Docker group changes)
 sudo ./configure_docker_network.sh
+```
 
 2. Docker Swarm Setup
-bash
+```bash
 # Initialize Docker Swarm with custom networks
 ./init_swarm_advanced.sh
+```
+
 3. BlackDuck Deployment
-bash
+```bash
 # Deploy BlackDuck stack
 ./deploy_blackduck.sh
 
 # Verify deployment
 ./health_check.sh
-Network Configuration
+```
+
+## Network Configuration
 The installation uses custom Docker network configuration for enhanced security and performance:
 
 Bridge IP: 172.30.0.1/16
@@ -106,46 +114,49 @@ blackduck-backend (172.30.2.0/24) - Internal services
 
 blackduck-database (172.30.3.0/24) - Database services
 
-Common Operations
+## Common Operations
+
 Start all services:
-bash
+```bash
 cd /opt/blackduck
 docker stack deploy -c docker-compose.yml blackduck
+```
+
 Stop all services:
-bash
+```bash
 docker stack rm blackduck
+```
 View logs:
-bash
+```bash
 docker service logs blackduck_webapp -f
+```
 Scale services:
-bash
+```bash
 docker service scale blackduck_scan=3
+```
 Backup database:
-bash
+```bash
 ./blackduck_commands.sh backup
+```
 Check service status:
-bash
+```bash
 ./blackduck_commands.sh status
+```
 Restart services:
-bash
+```bash
 ./blackduck_commands.sh restart webapp
+```
 Security Considerations
-Change default passwords in the environment file immediately after installation
-
-Enable SSL/TLS with valid certificates for production environments
-
-Configure firewall to restrict access to essential ports only
-
-Regular backups of PostgreSQL data and configuration files
-
-Monitor resource usage and scale services accordingly
-
-Use encrypted overlay networks for swarm communication
-
-Restrict database port access to trusted IP ranges only
+1. Change default passwords in the environment file immediately after installation
+2. Enable SSL/TLS with valid certificates for production environments
+3. Configure the firewall to restrict access to essential ports only
+4. Regular backups of PostgreSQL data and configuration files
+5. Monitor resource usage and scale services accordingly
+6. Use encrypted overlay networks for swarm communication
+7. Restrict database port access to trusted IP ranges only
 
 Firewall Configuration
-bash
+```bash
 # Essential ports to open
 sudo ufw allow 22/tcp                    # SSH
 sudo ufw allow 443/tcp                   # HTTPS Web UI
@@ -157,63 +168,65 @@ sudo ufw allow 2377/tcp                  # Swarm management
 sudo ufw allow 7946/tcp                  # Swarm node communication  
 sudo ufw allow 7946/udp
 sudo ufw allow 4789/udp                  # Overlay network traffic
+```
 Runtime Dependencies
 BlackDuck requires these runtimes for comprehensive code analysis:
 
-Python3 & pip: Python dependency analysis and virtual environment parsing
-
-Java JDK 11: Java bytecode analysis and compilation
-
-Maven & Gradle: Java build system dependency resolution
-
-Node.js & npm: JavaScript/TypeScript package analysis
-
-Additional Tools: curl, wget, git, jq for various operations
+* Python3 & pip: Python dependency analysis and virtual environment parsing
+* Java JDK 11: Java bytecode analysis and compilation
+* Maven & Gradle: Java build system dependency resolution
+* Node.js & npm: JavaScript/TypeScript package analysis
+* Additional Tools: curl, wget, git, jq for various operations
 
 Troubleshooting
 Check service status:
-bash
+```bash
 docker service ls
+```
 View detailed logs:
-bash
+```bash
 docker service logs blackduck_webapp
+```
 Verify network:
-bash
+```bash
 docker network ls | grep blackduck
+```
 Check resource usage:
-bash
+```bash
 docker stats
+```
 Verify network configuration:
-bash
+```bash
 ./check_networks.sh
+```
 Check container connectivity:
-bash
+```bash
 docker exec <container_id> nslookup webapp
+```
 Test service health:
-bash
+```bash
 curl -f http://localhost:8080/api/health-checks/status
+```
 Backup and Recovery
 Automated Backups
-bash
+```bash
 # Manual backup
 ./blackduck_commands.sh backup
 
+
 # Schedule daily backups (add to crontab)
 0 2 * * * /opt/blackduck/blackduck_commands.sh backup
+```
 Backup Contents
-PostgreSQL database dump
-
-Configuration files
-
-SSL certificates
-
-Environment variables
-
-Application settings
+* PostgreSQL database dump
+* Configuration files
+* SSL certificates
+* Environment variables
+* Application settings
 
 Monitoring and Maintenance
 Health Checks
-bash
+```bash
 # Run comprehensive health check
 ./health_check.sh
 
@@ -222,17 +235,15 @@ docker service ps blackduck_webapp
 
 # Verify all services are running
 docker service ls | grep blackduck
+```
 Log Management
-Log Location: /opt/blackduck/logs/
-
-Docker Log Rotation: 100MB max size, 3 files retained
-
-Application Logs: Access via docker service logs <service_name>
-
+* Log Location: /opt/blackduck/logs/
+* Docker Log Rotation: 100MB max size, 3 files retained
+* Application Logs: Access via docker service logs <service_name>
 System Logs: Monitor with journalctl -u docker.service
 
 Performance Monitoring
-bash
+```bash
 # Real-time resource usage
 docker stats
 
@@ -244,15 +255,17 @@ docker network inspect blackduck-frontend
 
 # Disk space monitoring
 df -h /opt/blackduck
+```
 Scripts Overview
-Script	Purpose
-install_blackduck.sh	Installs system dependencies and language runtimes
-configure_docker_network.sh	Configures Docker daemon with custom network settings
-init_swarm_advanced.sh	Initializes Docker Swarm with segregated networks
-deploy_blackduck.sh	Deploys BlackDuck stack with proper configuration
-blackduck_commands.sh	Management commands for daily operations
-health_check.sh	Comprehensive system and service health verification
-check_networks.sh	Network configuration and connectivity verification
+| Script | Purpose |
+| install_blackduck.sh |	Installs system dependencies and language runtimes |
+| configure_docker_network.sh |	Configures Docker daemon with custom network settings |
+| init_swarm_advanced.sh |	Initializes Docker Swarm with segregated networks |
+| deploy_blackduck.sh |	Deploys BlackDuck stack with proper configuration |
+| blackduck_commands.sh |	Management commands for daily operations |
+| health_check.sh |	Comprehensive system and service health verification |
+| check_networks.sh |	Network configuration and connectivity verification |
+
 Docker Network Architecture
 The installation implements a three-tier network architecture:
 
