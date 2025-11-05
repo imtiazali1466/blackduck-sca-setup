@@ -26,3 +26,7 @@ This documentation provides instructions for installing and configuring BlackDuc
 ├── secrets/
 └── docker-compose.yml
 
+## Quick Start
+1. Run the installation script: `./install_blackduck.sh`
+2. Initialize Docker Swarm: `./init_swarm.sh`
+3. Deploy BlackDuck: `./deploy_blackduck.sh`
